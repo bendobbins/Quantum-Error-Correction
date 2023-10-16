@@ -1,0 +1,6 @@
+- Add references for math resources, like how to do tensor/kroenecker, how to do matrix multiplication, etc
+- Add references in general, should probably collect a bunch from other research papers to throw in
+- Make language more formal
+- Maybe add a section relating things to qiskit and showing how the math works in terms of their representations of circuits
+- Sections towards the beginning are more of a tutorial for people new to quantum computing. Sections towards the end should go into our research on error correction, bacon shor,
+logical gates, etc

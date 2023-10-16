@@ -24,7 +24,7 @@
 
 
 
-\title{A Basic Overview of Error Correction for Quantum Computers}
+\title{A Basic Overview of Quantum Computing Fundamentals and Error Correction}
 
 %\date{September 9, 1985}	% Here you can change the date presented in the paper title
 %\date{} 					% Or removing it
@@ -70,7 +70,7 @@
 %%% Once the PDF is generated, you can check the metadata with
 %%% $ pdfinfo template.pdf
 \hypersetup{
-pdftitle={A Basic Overview of Error Correction for Quantum Computers},
+pdftitle={A Basic Overview of Quantum Computing Fundamentals and Error Correction},
 pdfsubject={q-bio.NC, q-bio.QM},
 pdfauthor={Anthony Thonnard, Benjamin Dobbins},
 pdfkeywords={First keyword, Second keyword, More},
@@ -86,84 +86,578 @@ pdfkeywords={First keyword, Second keyword, More},
 
 
 \section{Qubits}
-Qubits are the fundamental building blocks of quantum computers, just as bits are to classical computers.
-\pagebreak
+\label{sec:qubits}
+Qubits are the fundamental units of information in quantum computers, and are essentially the quantum analogue of classical bits. Classical bits are represented as a $0$ or 
+a $1$, denoted by the presence of an electrical current. They store binary information in a classical computer, and can be combined and abstracted to store more complex 
+information. Qubits are similarly limited to two possible physical states, also described as $0$ or $1$, but because of their quantum mechanical properties, they can also be 
+in a superposition of those two states. Consequently, while bits must only be a $0$ or a $1$ at all times (i.e. the electrical current is present or it is not), qubits 
+can be in an unknown state, in which it cannot be determined whether the qubit is a $0$ or a $1$ unless it is being observed. This is useful because we are able to manipulate 
+the probabilities of the qubit being in either state, and thus we can perform operations on the qubit that are not possible with classical bits. Furthermore, 
+quantum entanglement can be applied to link multiple qubits together, creating a mutual dependence between their probabilities of taking each state. As a result, the computer's
+ability to make complex calculations in shorter amounts of time is exponentially increased.
 
+\subsection{The Mathematical Representation of Qubits}
+\label{sec:mathrep}
+Qubits are represented mathematically as vectors, more specifically as unit normal column vectors in a two-dimensional complex vector space. The two basis vectors of this 
+vector space are denoted as $\ket{0}$ and $\ket{1}$, and are represented as follows: 
 
-\section{Headings: first level}
-\label{sec:headings}
-
-\lipsum[4] See Section \ref{sec:headings}.
-
-\subsection{Headings: second level}
-\lipsum[5]
-\begin{equation}
-	\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\end{equation}
-
-\subsubsection{Headings: third level}
-\lipsum[6]
-
-\paragraph{Paragraph}
-\lipsum[7]
-
-
-
-\section{Examples of citations, figures, tables, references}
-\label{sec:others}
-
-\subsection{Citations}
-Citations use \verb+natbib+. The documentation may be found at
 \begin{center}
-	\url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
+	$\ket{0} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ \hspace{1cm} $\ket{1} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$	
 \end{center}
 
-Here is an example usage of the two main commands (\verb+citet+ and \verb+citep+): Some people thought a thing \citep{kour2014real, hadash2018estimate} but other people thought something else \citep{kour2014fast}. Many people have speculated that if we knew exactly why \citet{kour2014fast} thought this\dots
+The unit normal nature of these vectors means that they always have a magnitude of $1$ (the square root of the sum of the squared components is 1). This magnitude 
+can be thought of as the probability that the qubit will take any state when observed (always must be 1 since a state must be observed). While that information alone may seem 
+useless, it entails that the square of each component of the vector is equal to the probability of the system being in that state. The first row of the vector represents the 
+$\ket{0}$ component, and the second row represents the $\ket{1}$ component. For the basis vector $\ket{0}$, the probability of being in the $\ket{0}$ state is $1^{2}$, and the 
+probability of being in the $\ket{1}$ state is $0^{2}$. Similarly, for the basis vector $\ket{1}$, the probability of being in the $\ket{0}$ state is $0^{2}$, and the probability of 
+being in the $\ket{1}$ state is $1^{2}$. Consider the qubit below:
 
-\subsection{Figures}
-\lipsum[10]
-See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11]
-
-\begin{figure}
-	\centering
-	\fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-	\caption{Sample figure caption.}
-	\label{fig:fig1}
-\end{figure}
-
-\subsection{Tables}
-See awesome Table~\ref{tab:table}.
-
-The documentation for \verb+booktabs+ (`Publication quality tables in LaTeX') is available from:
 \begin{center}
-	\url{https://www.ctan.org/pkg/booktabs}
+	$
+	q =
+	\begin{bmatrix}
+		\frac{1}{2} \\
+		\frac{\sqrt{3}}{2}
+	\end{bmatrix}
+	$
+\end{center}
+
+In this case, the probability of $q$ being in the $\ket{0}$ state would be $ (\frac{1}{2})^{2} = \frac{1}{4}$, while the probability of $q$ being in the $\ket{1}$ state would be 
+$ (\frac{\sqrt{3}}{2})^{2} = \frac{3}{4}$.
+\textbf{ADD REFERENCE AND EXPLANATION FOR COMPLEX VECTOR SPACE}. 
+
+\subsubsection{Multi-Qubit Systems}
+A one-qubit system is about as useful as a single bit in a classical computer, so it is necessary to combine multiple qubits together to create a more complex system. This can
+be accomplished by taking the tensor product of two qubits/systems of qubits. The tensor product of two vectors is a vector that represents the combined system of the two
+vectors. For example, the tensor product of the two qubits $\ket{0}$ and $\ket{1}$ would be:
+
+\begin{center}
+	$
+	\ket{0} \otimes \ket{1} =
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+	\otimes
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \cdot
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix} \\
+		0 \cdot 
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\ket{01}
+	$
+\end{center}
+
+Notice that the tensor product of two vectors of length $n$ and $m$ will result in a vector of length $n \cdot m$. The four-dimensional vector above represents the two qubit 
+system where the first qubit is in the $0$ state and the second qubit is in the $1$ state (hence the $\ket{01}$ notation). \textbf{ADD REFERENCE FOR TENSOR/KROENECKER PRODUCT}. 
+We can also take the tensor product of larger qubit systems, take the following example:
+
+\begin{center}
+	$
+	\ket{01} \otimes \ket{10} =
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+	\otimes
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \cdot
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix} \\
+		1 \cdot
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix} \\
+		0 \cdot
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix} \\
+		0 \cdot
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+	=	
+	\ket{0110}
+	$
 \end{center}
 
 
-\begin{table}
-	\caption{Sample table title}
-	\centering
-	\begin{tabular}{lll}
-		\toprule
-		\multicolumn{2}{c}{Part}                   \\
-		\cmidrule(r){1-2}
-		Name     & Description     & Size ($\mu$m) \\
-		\midrule
-		Dendrite & Input terminal  & $\sim$100     \\
-		Axon     & Output terminal & $\sim$10      \\
-		Soma     & Cell body       & up to $10^6$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:table}
-\end{table}
+\subsection{Physical Qubits}
+\label{sec:physicalqubits}
+A physical qubit is a physical system that can be used to represent a qubit. There are many different types of physical qubits, but the most common are the spin of an electron,
+the polarization of a photon, and the energy levels of an atom. The commonalities shared by these systems are that they all have two possible observed states, yet they can all
+be in a superposition of those states. For the spin of an electron, the $\ket{0}$ state would be spin up, and the $\ket{1}$ state would be spin down. These physical qubits based 
+on spin can be modeled by the Bloch sphere, which is a unit sphere that represents the possible states of a qubit. The north pole of the sphere represents the $\ket{0}$ state,
+and the south pole represents the $\ket{1}$ state. Any point outside of the poles represents the qubit in a state of superposition, and the point on the sphere represents the
+\textbf{fill this in later, think it's the probabilities, but not sure}. The polarization of a photon, or the direction of its electromagnetic field, can be used with 
+horizontally polarized representing the $\ket{0}$ state, and vertically polarized representing the $\ket{1}$ state. The energy levels of an atom are used in trapped ion 
+quantum computers, and the $\ket{0}$ state is represented by the ground state of the atom, while the $\ket{1}$ state is represented by the excited state of the atom.
 
-\subsection{Lists}
-\begin{itemize}
-	\item Lorem ipsum dolor sit amet
-	\item consectetur adipiscing elit.
-	\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
-\end{itemize}
+\vspace{5mm}
+
+Physical qubits are used to store all of the information in a quantum computer, meaning ideally they would be resistant to errors, to prevent loss of information. However, in 
+reality, physical qubits are extremely susceptible to errors, and thus error correction is necessary to ensure the accuracy of the information stored in qubits. The most 
+common types of errors are bit-flip and phase-flip errors, which will be discussed in more depth in section \textbf{Add reference to section} \ref{sec:errors}. Since physical
+qubit systems are so unfathomably delicate, these errors are prone to occur quite often and are caused by a multitude of different factors. This is a major reason why error 
+correction is so important; there is an abundance of noise and errors when working with these systems, which leads to information loss. The most common causes of
+errors are \textbf{find common causes. One can be qubits interacting with each other, causing interference in their wave functions}. Because one of the main contributors to 
+noise is qubits interfering with each other, the probability of information loss increases exponentially as the number of qubits in a system increases. Since it is inherently 
+impossible to eliminate the noise in quantum computers, it is necessary to devise a system that allows correction of these errors, which is the purpose of logical qubits.
+
+\subsection{Logical Qubits}
+\label{sec:logicalqubits}
+Logical qubits will be discussed in further detail in section \ref{sec:baconshor}, but for now it is important to understand that logical qubits are a method of representing
+ideal, error-resistant qubits. Logical qubits are built using a system of multiple physical qubits that are entangled together in such a way that some of the qubits, called 
+auxiliary qubits, can detect and/or correct errors in the other qubits, called data qubits. As is shown in section \ref{sec:baconshor}, simpler logical qubits that only 
+detect/correct certain types of errors can be built using smaller amount of qubits, but more practical logical qubits require at least \textbf{number} physical qubits to detect
+multiple different types of errors. The number of physical qubits required to build a logical qubit is called the overhead of the logical qubit, and is a major factor in the
+practicality of a logical qubit. \textbf{Say something about how there really aren't any "practical" logical qubits yet, since they all have such high overheads, computers 
+cannot contain very many qubits yet, and there are issues with gate operations on logical qubits}.
+
+
+\section{Quantum Gates}
+\label{sec:quantumgates}
+
+Now that we have introduced qubits and the idea that they can be in different states, we can discuss how those states are manipulated. In classical computers, we use logic
+gates to manipulate the states of bits. Similarly, qubits and qubit systems are altered using quantum gates. Quantum gates are represented as matrices, and are applied to
+qubits by multiplying the gate matrix by the qubit vector. The result of this multiplication is the new state of the qubit.
+
+\subsection{Fundamental Quantum Gates}
+\label{sec:fundamentalgates}
+
+\subsubsection{X Gate}
+\label{sec:xgate}
+
+The X gate is the quantum analogue of the NOT gate in classical computers. It is represented by the following matrix:
+
+\begin{center}
+	$
+	\begin{bmatrix}
+		0 & 1 \\
+		1 & 0
+	\end{bmatrix}
+	$
+\end{center}
+
+Similar to classical computers, if the X gate is applied to a qubit in the $\ket{0}$ state, that qubit will then be in the $\ket{1}$ state and vice versa. This can be clearly
+shown using the mathematical representation of the qubit and the gate:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			1 \\
+			0
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			1
+		\end{bmatrix}
+		\hspace{1cm}
+		\begin{bmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			1
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\textbf{Add something about how the X gate flips the qubit along the x-axis of the Bloch sphere (or whatever axis it was, I forget)}
+
+\subsubsection{Y Gate}
+\label{sec:ygate}
+
+The Y gate is represented by the following matrix:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			0 & -i \\
+			i & 0
+		\end{bmatrix}
+	\]
+\end{center}
+
+\textbf{Fill in information about what the Y gate does}. Applying it to the $\ket{0}$ state and the $\ket{1}$ state, we get:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			0 & -i \\
+			i & 0
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			1 \\
+			0
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			i
+		\end{bmatrix}
+		\hspace{1cm}
+		\begin{bmatrix}
+			0 & -i \\
+			i & 0
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-i \\
+			0 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\subsubsection{Z Gate}
+\label{sec:zgate}
+
+The Z gate is represented by the following matrix:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			1 & 0 \\
+			0 & -1
+		\end{bmatrix}
+	\]
+\end{center}
+
+\textbf{Fill in information about what the Z gate does}. Applying it to the $\ket{0}$ state and the $\ket{1}$ state, we get:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			1 & 0 \\
+			0 & -1
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		\hspace{1cm}
+		\begin{bmatrix}
+			1 & 0 \\
+			0 & -1
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			-1 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\subsubsection{Hadamard Gate}
+\label{sec:hadamardgate}
+
+The Hadamard gate is represented by the following matrix:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+		\end{bmatrix}
+	\]
+\end{center}
+
+The hadamard gate is used to put a qubit into a superposition of the $\ket{0}$ and $\ket{1}$ states. This is extremely useful because it is what allows us to capitalize on the
+quantum mechanical properties of qubits. Applying the hadamard gate to the $\ket{0}$ state and the $\ket{1}$ state, we get:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} \\
+		\end{bmatrix}
+		\hspace{1cm}
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} \\
+			-\frac{1}{\sqrt{2}} \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+Notice that in each of those cases the magnitude of the resulting vector is still $1$, yet the probabilities of the qubit being in the $\ket{0}$ and $\ket{1}$ states are now
+both $ \frac{1}{2}$. The hadamard gate can also be applied again to remove these superpositions and return the qubits to their original states:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		\hspace{1cm}
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			\frac{1}{\sqrt{2}} \\
+			-\frac{1}{\sqrt{2}} \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\subsubsection{CNOT/CX Gate}
+\label{sec:cnotgate}
+
+The CNOT gate is another one of the most important gates in quantum computing, since facilitates the entanglement of qubits, which is a key component of quantum computing. It does
+this by essentially projecting the state of one qubit onto another qubit (\textbf{double check this}). The CNOT gate is the first gate we have discussed that acts on multiple
+qubits instead of just one. Therefore, we must recall the tensor product of qubits that we discussed in section \ref{sec:mathrep}. We can use the tensor product to represent 
+two qubits in a system, and then apply the CNOT gate to that system. Consider the following two-qubit systems:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+		\otimes
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\ket{10}
+		\hspace{1cm}
+		\begin{bmatrix}
+			1 \\
+			0 \\
+		\end{bmatrix}
+		\otimes
+		\begin{bmatrix}
+			0 \\
+			1 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			1 \\
+			0 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\ket{01}
+	\]
+\end{center}
+
+If we apply the CNOT gate to the $\ket{10}$ system, we get:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			1 & 0 & 0 & 0 \\
+			0 & 1 & 0 & 0 \\
+			0 & 0 & 0 & 1 \\
+			0 & 0 & 1 & 0 \\
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			1 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			0 \\
+			0 \\
+			1 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+We end up with the $\ket{11}$ state, meaning both qubits in the system are now in the $\ket{1}$ state. This is because, as previously described, the CNOT gate projects the state
+of the first qubit onto the second qubit. Since the first qubit was in the $\ket{1}$ state, the second qubit is now also in the $\ket{1}$ state. Knowing this, we can now make 
+the prediction that applying the CNOT gate to the $\ket{01}$ system will result in the $\ket{00}$ system, since the first qubit is in the $\ket{0}$ state. However, this is not
+the case:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			1 & 0 & 0 & 0 \\
+			0 & 1 & 0 & 0 \\
+			0 & 0 & 0 & 1 \\
+			0 & 0 & 1 & 0 \\
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			0 \\
+			1 \\
+			0 \\
+			0 \\
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			1 \\
+			0 \\
+			0 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\textbf{explain why this is, maybe give another example with a two qubit system in superposition}
+
+\subsubsection{CZ Gate}
+\label{sec:czgate}
+
+The CZ gate is represented by the following matrix:
+
+\begin{center}
+	\[
+		\begin{bmatrix}
+			1 & 0 & 0 & 0 \\
+			0 & 1 & 0 & 0 \\
+			0 & 0 & 1 & 0 \\
+			0 & 0 & 0 & -1 \\
+		\end{bmatrix}
+	\]
+\end{center}
+
+\textbf{explain what the cz gate does}
+
+\section{Interpreting Qiskit Circuits}
+
+\section{Error Correction}
 
 \end{document}
 
