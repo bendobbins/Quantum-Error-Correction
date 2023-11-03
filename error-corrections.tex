@@ -96,7 +96,11 @@ the probabilities of the qubit being in either state, and thus we can perform op
 quantum entanglement can be applied to link multiple qubits together, creating a mutual dependence between their probabilities of taking each state. As a result, the computer's
 ability to make complex calculations in shorter amounts of time is exponentially increased.
 
-\subsection{The Mathematical Representation of Qubits}
+\subsection{Qubits and Probabilities}
+\label{sec:qubitprobs}
+
+
+\subsubsection{The Mathematical Representation of Qubits}
 \label{sec:mathrep}
 Qubits are represented mathematically as vectors, more specifically as unit normal column vectors in a two-dimensional complex vector space. The two basis vectors of this 
 vector space are denoted as $\ket{0}$ and $\ket{1}$, and are represented as follows: 
@@ -126,7 +130,12 @@ In this case, the probability of $q$ being in the $\ket{0}$ state would be $ (\f
 $ (\frac{\sqrt{3}}{2})^{2} = \frac{3}{4}$.
 \textbf{ADD REFERENCE AND EXPLANATION FOR COMPLEX VECTOR SPACE}. 
 
-\subsubsection{Multi-Qubit Systems}
+
+\subsection{Quantum Coin Toss}
+\label{sec:quantumcointoss}
+\subsection{Multi-Qubit Systems}
+\label{sec:multiqubitsystems}
+
 A one-qubit system is about as useful as a single bit in a classical computer, so it is necessary to combine multiple qubits together to create a more complex system. This can
 be accomplished by taking the tensor product of two qubits/systems of qubits. The tensor product of two vectors is a vector that represents the combined system of the two
 vectors. For example, the tensor product of the two qubits $\ket{0}$ and $\ket{1}$ would be:
@@ -244,8 +253,15 @@ We can also take the tensor product of larger qubit systems, take the following 
 \end{center}
 
 
+\subsubsection{Example of a Multi-Qubit System}
+\label{sec:examplemultisystem}
+\subsection{The Bloch Sphere}
+\label{sec:blochsphere}
+\subsubsection{Bloch Sphere Representations}
+\label{sec:blochspherereps}
 \subsection{Physical Qubits}
 \label{sec:physicalqubits}
+
 A physical qubit is a physical system that can be used to represent a qubit. There are many different types of physical qubits, but the most common are the spin of an electron,
 the polarization of a photon, and the energy levels of an atom. The commonalities shared by these systems are that they all have two possible observed states, yet they can all
 be in a superposition of those states. For the spin of an electron, the $\ket{0}$ state would be spin up, and the $\ket{1}$ state would be spin down. These physical qubits based 
@@ -266,8 +282,15 @@ errors are \textbf{find common causes. One can be qubits interacting with each o
 noise is qubits interfering with each other, the probability of information loss increases exponentially as the number of qubits in a system increases. Since it is inherently 
 impossible to eliminate the noise in quantum computers, it is necessary to devise a system that allows correction of these errors, which is the purpose of logical qubits.
 
-\subsection{Logical Qubits}
-\label{sec:logicalqubits}
+
+
+\subsubsection{Trapped Ion Qubits}
+\label{sec:trappedionqubits}
+
+
+
+\subsection{Logical Qubits and Limitations of Quantum Computers}
+\label{sec:logicalqubitsbrief}
 Logical qubits will be discussed in further detail in section \ref{sec:baconshor}, but for now it is important to understand that logical qubits are a method of representing
 ideal, error-resistant qubits. Logical qubits are built using a system of multiple physical qubits that are entangled together in such a way that some of the qubits, called 
 auxiliary qubits, can detect and/or correct errors in the other qubits, called data qubits. As is shown in section \ref{sec:baconshor}, simpler logical qubits that only 
@@ -277,15 +300,27 @@ practicality of a logical qubit. \textbf{Say something about how there really ar
 cannot contain very many qubits yet, and there are issues with gate operations on logical qubits}.
 
 
-\section{Quantum Gates}
-\label{sec:quantumgates}
 
+
+
+
+
+
+
+
+
+
+
+\section{Quantum Circuits}
+\label{sec:quantumcircuits}
+
+
+
+\subsection{Basic Quantum Gates}
+\label{sec:basicgates}
 Now that we have introduced qubits and the idea that they can be in different states, we can discuss how those states are manipulated. In classical computers, we use logic
 gates to manipulate the states of bits. Similarly, qubits and qubit systems are altered using quantum gates. Quantum gates are represented as matrices, and are applied to
 qubits by multiplying the gate matrix by the qubit vector. The result of this multiplication is the new state of the qubit.
-
-\subsection{Fundamental Quantum Gates}
-\label{sec:fundamentalgates}
 
 \subsubsection{X Gate}
 \label{sec:xgate}
@@ -637,9 +672,52 @@ The CZ gate is represented by the following matrix:
 
 \textbf{explain what the cz gate does}
 
-\section{Interpreting Qiskit Circuits}
 
-\section{Error Correction}
+
+\subsection{Basic Rotation Circuit}
+\label{sec:basicrotationcircuit}
+\subsection{Combining Quantum Gates}
+\label{sec:combininggates}
+\subsection{Building Quantum Gates}
+\label{sec:buildinggates}
+\subsection{Grover's Algorithm}
+\label{sec:groversalgorithm}
+\subsubsection{Why Grover's Algorithm Works}
+\label{sec:whygroverworks}
+\subsection{Circuit Calculator}
+\label{sec:circuitcalculator}
+
+
+
+
+
+
+
+\section{Logical Qubits and Error Correction}
+\label{sec:errorcorrection}
+
+\subsection{Logical Qubits}
+\label{sec:logicalqubits}
+\subsection{Where Logical Qubits are Used}
+\label{sec:wherelqused}
+\subsection{Simple Error Correction Circuits}
+\label{sec:simpleeccircuits}
+\subsubsection{Bit-Flip Code}
+\label{sec:bitflipcode}
+\subsubsection{Phase-Flip Code}
+\label{sec:phaseflipcode}
+\subsection{Shor's Code}
+\label{sec:shorscode}
+\subsection{Logical Gates}
+\label{sec:logicalgates}
+\subsection{Bacon-Shor Code}
+\label{sec:baconshor}
+\subsubsection{Ancilla Qubits}
+\label{sec:ancillaqubits}
+\subsubsection{Why Ancilla Qubits Do Not Disrupt the System}
+\label{sec:ancilladisruption}
+
+
 
 \end{document}
 
