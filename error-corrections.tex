@@ -78,13 +78,13 @@ pdfkeywords={First keyword, Second keyword, More},
 
 \begin{document}
 \maketitle
-
 \begin{abstract}
 	\lipsum[1]
 \end{abstract}
 
 
 
+\twocolumn[]
 \section{Qubits}
 \label{sec:qubits}
 Qubits are the fundamental units of information in quantum computers, and are essentially the quantum analogue of classical bits. Classical bits are represented as a $0$ or 
@@ -304,39 +304,38 @@ The X gate is the quantum analogue of the NOT gate in classical computers. It is
 Similar to classical computers, if the X gate is applied to a qubit in the $\ket{0}$ state, that qubit will then be in the $\ket{1}$ state and vice versa. This can be clearly
 shown using the mathematical representation of the qubit and the gate:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			0 & 1 \\
-			1 & 0
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			1 \\
-			0
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			1
-		\end{bmatrix}
-		\hspace{1cm}
-		\begin{bmatrix}
-			0 & 1 \\
-			1 & 0
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			1
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		0 & 1 \\
+		1 & 0
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+\]
+\[
+	\begin{bmatrix}
+		0 & 1 \\
+		1 & 0
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+\]
 
 \textbf{Add something about how the X gate flips the qubit along the x-axis of the Bloch sphere (or whatever axis it was, I forget)}
 
@@ -345,188 +344,178 @@ shown using the mathematical representation of the qubit and the gate:
 
 The Y gate is represented by the following matrix:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			0 & -i \\
-			i & 0
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		0 & -i \\
+		i & 0
+	\end{bmatrix}
+\]
 
 \textbf{Fill in information about what the Y gate does}. Applying it to the $\ket{0}$ state and the $\ket{1}$ state, we get:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			0 & -i \\
-			i & 0
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			1 \\
-			0
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			i
-		\end{bmatrix}
-		\hspace{1cm}
-		\begin{bmatrix}
-			0 & -i \\
-			i & 0
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			-i \\
-			0 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		0 & -i \\
+		i & 0
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		i
+	\end{bmatrix}
+\]
+\[
+	\begin{bmatrix}
+		0 & -i \\
+		i & 0
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		-i \\
+		0 \\
+	\end{bmatrix}
+\]
 
 \subsubsection{Z Gate}
 \label{sec:zgate}
 
 The Z gate is represented by the following matrix:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			1 & 0 \\
-			0 & -1
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & -1
+	\end{bmatrix}
+\]
 
 \textbf{Fill in information about what the Z gate does}. Applying it to the $\ket{0}$ state and the $\ket{1}$ state, we get:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			1 & 0 \\
-			0 & -1
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		\hspace{1cm}
-		\begin{bmatrix}
-			1 & 0 \\
-			0 & -1
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			-1 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & -1
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+\]
+\[
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & -1
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		-1 \\
+	\end{bmatrix}
+\]
 
 \subsubsection{Hadamard Gate}
 \label{sec:hadamardgate}
 
 The Hadamard gate is represented by the following matrix:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+	\end{bmatrix}
+\]
 
 The hadamard gate is used to put a qubit into a superposition of the $\ket{0}$ and $\ket{1}$ states. This is extremely useful because it is what allows us to capitalize on the
 quantum mechanical properties of qubits. Applying the hadamard gate to the $\ket{0}$ state and the $\ket{1}$ state, we get:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} \\
-		\end{bmatrix}
-		\hspace{1cm}
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} \\
-			-\frac{1}{\sqrt{2}} \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} \\
+	\end{bmatrix}
+\]
+\[
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} \\
+		-\frac{1}{\sqrt{2}} \\
+	\end{bmatrix}
+\]
 
 Notice that in each of those cases the magnitude of the resulting vector is still $1$, yet the probabilities of the qubit being in the $\ket{0}$ and $\ket{1}$ states are now
 both $ \frac{1}{2}$. The hadamard gate can also be applied again to remove these superpositions and return the qubits to their original states:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		\hspace{1cm}
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
-			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			\frac{1}{\sqrt{2}} \\
-			-\frac{1}{\sqrt{2}} \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+\]
+\[
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		\frac{1}{\sqrt{2}} \\
+		-\frac{1}{\sqrt{2}} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+\]
 
 \subsubsection{CNOT/CX Gate}
 \label{sec:cnotgate}
@@ -536,104 +525,99 @@ this by essentially projecting the state of one qubit onto another qubit (\textb
 qubits instead of just one. Therefore, we must recall the tensor product of qubits that we discussed in section \ref{sec:mathrep}. We can use the tensor product to represent 
 two qubits in a system, and then apply the CNOT gate to that system. Consider the following two-qubit systems:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-		\otimes
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			0 \\
-			1 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\ket{10}
-		\hspace{1cm}
-		\begin{bmatrix}
-			1 \\
-			0 \\
-		\end{bmatrix}
-		\otimes
-		\begin{bmatrix}
-			0 \\
-			1 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			1 \\
-			0 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\ket{01}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	\otimes
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\ket{10}
+\]
+\[
+	\begin{bmatrix}
+		1 \\
+		0 \\
+	\end{bmatrix}
+	\otimes
+	\begin{bmatrix}
+		0 \\
+		1 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\ket{01}
+\]
 
 If we apply the CNOT gate to the $\ket{10}$ system, we get:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			1 & 0 & 0 & 0 \\
-			0 & 1 & 0 & 0 \\
-			0 & 0 & 0 & 1 \\
-			0 & 0 & 1 & 0 \\
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			0 \\
-			1 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			0 \\
-			0 \\
-			1 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 1 \\
+		0 & 0 & 1 & 0 \\
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		1 \\
+	\end{bmatrix}
+\]
 
 We end up with the $\ket{11}$ state, meaning both qubits in the system are now in the $\ket{1}$ state. This is because, as previously described, the CNOT gate projects the state
 of the first qubit onto the second qubit. Since the first qubit was in the $\ket{1}$ state, the second qubit is now also in the $\ket{1}$ state. Knowing this, we can now make 
 the prediction that applying the CNOT gate to the $\ket{01}$ system will result in the $\ket{00}$ system, since the first qubit is in the $\ket{0}$ state. However, this is not
 the case:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			1 & 0 & 0 & 0 \\
-			0 & 1 & 0 & 0 \\
-			0 & 0 & 0 & 1 \\
-			0 & 0 & 1 & 0 \\
-		\end{bmatrix}
-		\times
-		\begin{bmatrix}
-			0 \\
-			1 \\
-			0 \\
-			0 \\
-		\end{bmatrix}
-		=
-		\begin{bmatrix}
-			0 \\
-			1 \\
-			0 \\
-			0 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 1 \\
+		0 & 0 & 1 & 0 \\
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0 \\
+	\end{bmatrix}
+\]
 
 \textbf{explain why this is, maybe give another example with a two qubit system in superposition}
 
@@ -642,16 +626,14 @@ the case:
 
 The CZ gate is represented by the following matrix:
 
-\begin{center}
-	\[
-		\begin{bmatrix}
-			1 & 0 & 0 & 0 \\
-			0 & 1 & 0 & 0 \\
-			0 & 0 & 1 & 0 \\
-			0 & 0 & 0 & -1 \\
-		\end{bmatrix}
-	\]
-\end{center}
+\[
+	\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & -1 \\
+	\end{bmatrix}
+\]
 
 \textbf{explain what the cz gate does}
 
