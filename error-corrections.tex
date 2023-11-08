@@ -17,10 +17,13 @@
 \usepackage{natbib}
 \usepackage{doi}
 
+\usepackage{kbordermatrix}
+\usepackage{mathtools}
 \usepackage{sectsty}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{braket}
+\usepackage{calc}
 
 
 
@@ -275,7 +278,7 @@ quantum computers, and the $\ket{0}$ state is represented by the ground state of
 
 Physical qubits are used to store all of the information in a quantum computer, meaning ideally they would be resistant to errors, to prevent loss of information. However, in 
 reality, physical qubits are extremely susceptible to errors, and thus error correction is necessary to ensure the accuracy of the information stored in qubits. The most 
-common types of errors are bit-flip and phase-flip errors, which will be discussed in more depth in section \textbf{Add reference to section} \ref{sec:errors}. Since physical
+common types of errors are bit-flip and phase-flip errors, which will be discussed in more depth in section \textbf{Add reference to section} \ref{sec:simpleeccircuits}. Since physical
 qubit systems are so unfathomably delicate, these errors are prone to occur quite often and are caused by a multitude of different factors. This is a major reason why error 
 correction is so important; there is an abundance of noise and errors when working with these systems, which leads to information loss. The most common causes of
 errors are \textbf{find common causes. One can be qubits interacting with each other, causing interference in their wave functions}. Because one of the main contributors to 
@@ -291,9 +294,9 @@ impossible to eliminate the noise in quantum computers, it is necessary to devis
 
 \subsection{Logical Qubits and Limitations of Quantum Computers}
 \label{sec:logicalqubitsbrief}
-Logical qubits will be discussed in further detail in section \ref{sec:baconshor}, but for now it is important to understand that logical qubits are a method of representing
+Logical qubits will be discussed in further detail in section \ref{sec:logicalqubits}, but for now it is important to understand that logical qubits are a method of representing
 ideal, error-resistant qubits. Logical qubits are built using a system of multiple physical qubits that are entangled together in such a way that some of the qubits, called 
-auxiliary qubits, can detect and/or correct errors in the other qubits, called data qubits. As is shown in section \ref{sec:baconshor}, simpler logical qubits that only 
+auxiliary qubits, can detect and/or correct errors in the other qubits, called data qubits. As is shown in section \ref{sec:logicalqubits}, simpler logical qubits that only 
 detect/correct certain types of errors can be built using smaller amount of qubits, but more practical logical qubits require at least \textbf{number} physical qubits to detect
 multiple different types of errors. The number of physical qubits required to build a logical qubit is called the overhead of the logical qubit, and is a major factor in the
 practicality of a logical qubit. \textbf{Say something about how there really aren't any "practical" logical qubits yet, since they all have such high overheads, computers 
@@ -318,9 +321,10 @@ cannot contain very many qubits yet, and there are issues with gate operations o
 
 \subsection{Basic Quantum Gates}
 \label{sec:basicgates}
-Now that we have introduced qubits and the idea that they can be in different states, we can discuss how those states are manipulated. In classical computers, we use logic
-gates to manipulate the states of bits. Similarly, qubits and qubit systems are altered using quantum gates. Quantum gates are represented as matrices, and are applied to
-qubits by multiplying the gate matrix by the qubit vector. The result of this multiplication is the new state of the qubit.
+In classical computers, logic gates are used to manipulate the states of bits. More information about classical logic gates can be found \textbf{HERE} 
+Similarly, qubits and qubit systems are altered 
+using quantum gates. Quantum gates are represented as matrices, and are applied to qubits by multiplying the gate matrix by 
+the qubit vector. The result of this multiplication is the new state of the qubit.
 
 \subsubsection{X Gate}
 \label{sec:xgate}
@@ -680,6 +684,477 @@ The CZ gate is represented by the following matrix:
 \label{sec:combininggates}
 \subsection{Building Quantum Gates}
 \label{sec:buildinggates}
+In section \ref{sec:basicgates}, we discussed some of the most common quantum gates and their functions.
+However, we omitted an explanation regarding the underlying principles governing the functions of these gates.
+This absence of clarification could potentially obscure the rationale behind their compositions.
+In this section, we will address this oversight, demonstrating not only how these gates function, but also why they work.
+The answer, unsurprisingly, involves the fundamental concept that mathematically relates qubits to gates: matrix multiplication.
+
+
+
+\subsubsection{Building Gates by Manipulating Basis States}
+\label{sec:manipulatingbasisstates}
+
+When building a quantum logic gate, it is customary to focus on the gate's effect on the basis states of the system.
+Any $n$ qubit system has $2^{n}$ basis states, each of which can be represented as a column vector with $2^{n}$ rows.
+Furthermore, each basis state is a vector with a single $1$ and $2^{n} - 1$ $0$'s.
+Knowing this, consider the general case of each basis state of an $n$ qubit system passing through a gate:
+\begin{align*}
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{12^{n}} \\
+			a_{21} & a_{22} & \cdots & a_{22^{n}} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{2^{n}1} & a_{2^{n}2} & \cdots & a_{2^{n}2^{n}}
+		\end{bmatrix}
+		\times
+		\begin{bmatrix}
+			x_{i1} \\
+			x_{i2} \\
+			\vdots \\
+			x_{i2^{n}}
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			X_{i1} \\
+			X_{i2} \\
+			\vdots \\
+			X_{i2^{n}}
+		\end{bmatrix}
+\end{align*}
+Here, $i$ represents the $i^{th}$ basis state in the system (therefore $i \in \{1, 2, ..., 2^{n}\}$). 
+For example, $x_{11}, x_{12}, ..., x_{12^{n}}$ are the elements of the first basis state in the system and
+$X_{11}, X_{12}, ..., X_{12^{n}}$ are the elements of the corresponding output state for the first basis state.\\\\
+The system of equations for such an event can be generalized as follows:
+\begin{align*}
+	a_{11}x_{i1} + a_{12}x_{i2} + ... + a_{12^{n}}x_{i2^{n}} &= X_{i1} \\
+	a_{21}x_{i1} + a_{22}x_{i2} + ... + a_{22^{n}}x_{i2^{n}} &= X_{i2} \\
+	&\mathrel{\makebox[\widthof{=}]{\vdots}} \\
+	a_{2^{n}1}x_{i1} + a_{2^{n}2}x_{i2} + ... + a_{2^{n}2^{n}}x_{i2^{n}} &= X_{i2^{n}}	
+\end{align*}
+% IMPORTANT REWORD THIS SECTION
+Now, consider some $j \in \{1, 2, ..., 2^{n}\}$. 
+% Specifically this line, it may not be clear that x_{ii} is the i^{th} row of the i^{th} basis state
+It is always true that for the $i^{th}$ basis state in any $n$ qubit system, $x_{ii} = 1$ and $x_{ij} = 0$ for all $j \neq i$.
+For example, the first row of the first basis state of a system (where all qubits are $\ket{0}$) is always $1$, so in that case $x_{11} = 1$ and all $x_{1j}$ where $j \neq 1$ are $0$.\\\\
+Thus, if the gate were to be applied to the first basis state of the system, where $x_{11} = 1$ and $x_{1j} = 0$ when $j \neq 1$, the above system of equations can be simplified to:
+\begin{align*}
+	a_{11} &= X_{11} \\
+	a_{21} &= X_{12} \\
+	&\mathrel{\makebox[\widthof{=}]{\vdots}} \\
+	a_{2^{n}1} &= X_{12^{n}}
+\end{align*}
+Take a moment to understand why this happens by plugging the proper values into the system of equations above.\\\\
+Expanding this to the general case, if the gate were to be applied to the $i^{th}$ basis state of the system, where $x_{ii} = 1$ and $x_{ij} = 0$ when $j \neq i$, then the system of equations would be reduced to:
+\begin{align*}
+	a_{1i} &= X_{i1} \\
+	a_{2i} &= X_{i2} \\
+	&\mathrel{\makebox[\widthof{=}]{\vdots}} \\
+	a_{2^{n}i} &= X_{i2^{n}}
+\end{align*}
+where $X_{i1}, X_{i2}, ..., X_{i2^{n}}$ represent the desired output state for the basis state with $x_{ii} = 1$ (the $i^{th}$ basis state in the system). \\\\
+Notice that $a_{1i}, a_{2i}, ..., a_{2^{n}i}$ are now equivalent to the desired output state for the $i^{th}$ basis state of the system.
+Also notice that these are the values that compose the $i^{th}$ column of the gate matrix.
+This is a crucial observation, because it provides a heuristic for building quantum gates. \\\\
+The heuristic is as follows: the $i^{th}$ column of the gate matrix is the desired output vector for the $i^{th}$ basis state of the system.\\\\
+Hence, the completed gate matrix for the general example would be:
+\begin{align*}
+	\begin{bmatrix}
+		X_{11} & X_{21} & \cdots & X_{2^{n}1} \\
+		X_{12} & X_{22} & \cdots & X_{2^{n}2} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		X_{12^{n}} & X_{22^{n}} & \cdots & X_{2^{n}2^{n}}
+	\end{bmatrix}
+\end{align*}
+Given the many systems of equations and substitutions involved in the general derivation, it may seem convoluted or difficult to follow.
+For clarity, let's try a simple example and build a quantum gate for a two qubit system. These are the basis states for such a system:
+\[
+	\ket{00} =
+	\begin{bmatrix}
+		1 \\
+		0 \\
+		0 \\
+		0		
+	\end{bmatrix}
+	\ket{01} =
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0	
+	\end{bmatrix}
+	\ket{10} =
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0
+	\end{bmatrix}
+	\ket{11} =
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		1
+	\end{bmatrix}
+\]
+Suppose there exists a desired output state for each of the four basis states as follows:
+\begin{align*}
+	\ket{00} \rightarrow \ket{A} \\
+	\ket{01} \rightarrow \ket{B} \\
+	\ket{10} \rightarrow \ket{C} \\
+	\ket{11} \rightarrow \ket{D}
+\end{align*}
+We can then create an arbitrary gate and some equations to represent these transformations:
+\begin{align*}
+	\begin{bmatrix}
+		a_{1} & b_{1} & c_{1} & d_{1} \\
+		a_{2} & b_{2} & c_{2} & d_{2} \\
+		a_{3} & b_{3} & c_{3} & d_{3} \\
+		a_{4} & b_{4} & c_{4} & d_{4}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		1 \\
+		0 \\
+		0 \\
+		0
+	\end{bmatrix}
+	&=
+	\begin{bmatrix}
+		A_{1} \\
+		A_{2} \\
+		A_{3} \\
+		A_{4}
+	\end{bmatrix} \\
+	\begin{bmatrix}
+		a_{1} & b_{1} & c_{1} & d_{1} \\
+		a_{2} & b_{2} & c_{2} & d_{2} \\
+		a_{3} & b_{3} & c_{3} & d_{3} \\
+		a_{4} & b_{4} & c_{4} & d_{4}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0
+	\end{bmatrix}
+	&=
+	\begin{bmatrix}
+		B_{1} \\
+		B_{2} \\
+		B_{3} \\
+		B_{4}
+	\end{bmatrix} \\
+	\begin{bmatrix}
+		a_{1} & b_{1} & c_{1} & d_{1} \\
+		a_{2} & b_{2} & c_{2} & d_{2} \\
+		a_{3} & b_{3} & c_{3} & d_{3} \\
+		a_{4} & b_{4} & c_{4} & d_{4}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0
+	\end{bmatrix}
+	&=
+	\begin{bmatrix}
+		C_{1} \\
+		C_{2} \\
+		C_{3} \\
+		C_{4}
+	\end{bmatrix} \\
+	\begin{bmatrix}
+		a_{1} & b_{1} & c_{1} & d_{1} \\
+		a_{2} & b_{2} & c_{2} & d_{2} \\
+		a_{3} & b_{3} & c_{3} & d_{3} \\
+		a_{4} & b_{4} & c_{4} & d_{4}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		1
+	\end{bmatrix}
+	&=
+	\begin{bmatrix}
+		D_{1} \\
+		D_{2} \\
+		D_{3} \\
+		D_{4}
+	\end{bmatrix}
+\end{align*}
+The next step is to create systems of equations for each of these events. 
+First, consider the system of equations for the gate being applied to $\ket{00}$ ($i = 1$ in the general example):
+\begin{align*}
+	a_{1}(1) + b_{1}(0) + c_{1}(0) + d_{1}(0) &= a_{1} = A_{1} \\
+	a_{2}(1) + b_{2}(0) + c_{2}(0) + d_{2}(0) &= a_{2} = A_{2} \\
+	a_{3}(1) + b_{3}(0) + c_{3}(0) + d_{3}(0) &= a_{3} = A_{3} \\
+	a_{4}(1) + b_{4}(0) + c_{4}(0) + d_{4}(0) &= a_{4} = A_{4}
+\end{align*}
+Next, for the gate applied to $\ket{01}$ ($i = 2$):
+\begin{align*}
+	a_{1}(0) + b_{1}(1) + c_{1}(0) + d_{1}(0) &= b_{1} = B_{1} \\
+	a_{2}(0) + b_{2}(1) + c_{2}(0) + d_{2}(0) &= b_{2} = B_{2} \\
+	a_{3}(0) + b_{3}(1) + c_{3}(0) + d_{3}(0) &= b_{3} = B_{3} \\
+	a_{4}(0) + b_{4}(1) + c_{4}(0) + d_{4}(0) &= b_{4} = B_{4}
+\end{align*}
+Then, for the gate applied to $\ket{10}$ ($i = 3$):
+\begin{align*}
+	a_{1}(0) + b_{1}(0) + c_{1}(1) + d_{1}(0) &= c_{1} = C_{1} \\
+	a_{2}(0) + b_{2}(0) + c_{2}(1) + d_{2}(0) &= c_{2} = C_{2} \\
+	a_{3}(0) + b_{3}(0) + c_{3}(1) + d_{3}(0) &= c_{3} = C_{3} \\
+	a_{4}(0) + b_{4}(0) + c_{4}(1) + d_{4}(0) &= c_{4} = C_{4}
+\end{align*}
+Finally, for the gate applied to $\ket{11}$ ($i = 4$):
+\begin{align*}
+	a_{1}(0) + b_{1}(0) + c_{1}(0) + d_{1}(1) &= d_{1} = D_{1} \\
+	a_{2}(0) + b_{2}(0) + c_{2}(0) + d_{2}(1) &= d_{2} = D_{2} \\
+	a_{3}(0) + b_{3}(0) + c_{3}(0) + d_{3}(1) &= d_{3} = D_{3} \\
+	a_{4}(0) + b_{4}(0) + c_{4}(0) + d_{4}(1) &= d_{4} = D_{4}
+\end{align*}
+Given the above systems of equations, the pattern relating columns of the gate matrix to the desired output vectors for the basis states becomes clear.
+In this case, the constructed gate matrix for these transformations is:
+\begin{align*}
+	\begin{bmatrix}
+		A_{1} & B_{1} & C_{1} & D_{1} \\
+		A_{2} & B_{2} & C_{2} & D_{2} \\
+		A_{3} & B_{3} & C_{3} & D_{3} \\
+		A_{4} & B_{4} & C_{4} & D_{4}
+	\end{bmatrix}
+\end{align*}
+% Note that another interesting pattern occurs if the desired output states are all basis states as well.
+% Then each column of the gate matrix is simply the basis state that the gate should transform the corresponding basis state into.
+% With this knowledge, we can create a sort of "boolean" matrix that represents the desired output states for each basis state.
+% We can think of columns as input states and rows as output states, and the value at the intersection of a column and row is $1$ if the output corresponds to the input, and $0$ otherwise.
+% Such a matrix would look like this for a $1$ qubit system:
+% \[
+% 	\text{\small Output states: }
+% 	\kbordermatrix{
+% 		\text{\small Input states: }& \ket{0} & \ket{1} \\
+% 		\ket{0} & \ket{0} \mapsto \ket{0} & \ket{1} \mapsto \ket{0} \\
+% 		\ket{1} & \ket{0} \mapsto \ket{1} & \ket{1} \mapsto \ket{1}		
+% 	}
+% \]
+Now that we know how to build a gate for an $n$ qubit system, let's apply this knowledge to build some of the gates we have already learned.
+
+
+
+
+\subsubsection{Building the X (NOT) Gate}
+\label{sec:buildingxgate}
+As previously discussed, gates are built by considering the desired output states of all basis states of the system when passed through the gate.
+The X gate is the quantum analogue of a NOT gate, so it should negate the basis states of the system.
+Furthermore, a NOT gate can only negate a single bit, so the X gate should only negate a single qubit.
+Thus, the X gate can only operate on a $1$ qubit system and should have the following desired output states for each basis state:
+\begin{align*}
+	\ket{0} \rightarrow \ket{1} :
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+	\\
+	\ket{1} \rightarrow \ket{0} :
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+\end{align*}
+Recall that according to the heuristic developed in the last section, the first column of the gate should be the desired output for the first basis state
+($\ket{0}$), and the second column should be the desired output for the second basis state ($\ket{1}$).
+Thus, the gate matrix for the X gate should be:
+\begin{align*}
+	\begin{bmatrix}
+		0 & 1 \\
+		1 & 0
+	\end{bmatrix}
+\end{align*}
+This is the correct X gate matrix, as shown in section \ref{sec:xgate}.
+However, for the sake of completeness, let's verify again why the heuristic works as expected. \\\\
+An X gate is a $1$ qubit gate, so the equation for applying the gate would be:
+\begin{align*}
+	\begin{bmatrix}
+		a_{1} & b_{1} \\
+		a_{2} & b_{2}
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		x_{1} \\
+		x_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		X_{1} \\
+		X_{2}
+	\end{bmatrix}
+\end{align*}
+The system of equations for this would be:
+\begin{align*}
+	a_{1}x_{1} + b_{1}x_{2} &= X_{1} \\
+	a_{2}x_{1} + b_{2}x_{2} &= X_{2}
+\end{align*}
+Now, consider the situation where the input state is $\ket{0}$ and the output should be $\ket{1}$.
+Our equations become:
+\[
+	\begin{bmatrix}
+		x_{1} \\
+		x_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+	,
+	\begin{bmatrix}
+		X_{1} \\
+		X_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+\]
+\begin{align*}
+	a_{1}(1) + b_{1}(0) = a_{1} &= X_{1} = 0 \\
+	a_{2}(1) + b_{2}(0) = a_{2} &= X_{2} = 1
+\end{align*}
+Clearly, the first column of the gate is the desired output for the $\ket{0}$ state, which is $\ket{1}$.
+Now for the situation where the input state is $\ket{1}$ and the output should be $\ket{0}$:
+\[
+	\begin{bmatrix}
+		x_{1} \\
+		x_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+	,
+	\begin{bmatrix}
+		X_{1} \\
+		X_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+\]
+\begin{align*}
+	a_{1}(0) + b_{1}(1) = b_{1} &= X_{1} = 1 \\
+	a_{2}(0) + b_{2}(1) = b_{2} &= X_{2} = 0
+\end{align*}
+Again, the heuristic holds true, and the second column of the gate is the desired output for the $\ket{1}$ state, which is $\ket{0}$.
+We now have that $a_{1} = 0$, $a_{2} = 1$, $b_{1} = 1$, and $b_{2} = 0$. This gives us the matrix:
+\[
+	\begin{bmatrix}
+		a_{1} & b_{1} \\
+		a_{2} & b_{2}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 & 1 \\
+		1 & 0
+	\end{bmatrix}
+\]
+Thus, we have constructed the X gate (\ref{sec:xgate}).
+
+
+\subsubsection{Building Other Common Quantum Gates}
+\label{sec:buildingcommongates}
+Now that we understand how quantum gates are constructed, we can understand why the gates we have already learned work as expected.
+Consider the CNOT gate, or controlled NOT gate.
+As previously discussed, the CNOT gate projects the state of the first qubit onto the second qubit.
+In other words, the second qubit should be flipped if and only if the first qubit is in the $\ket{1}$ state.
+It is a gate that operates on two qubits, so the gate matrix should be a $4 \times 4$ matrix.
+Given the logic for how the gate should operate, the basis states should transform as follows:
+\begin{align*}
+	\ket{00} \rightarrow \ket{00} :
+	\begin{bmatrix}
+		1 \\
+		0 \\
+		0 \\
+		0
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		1 \\
+		0 \\
+		0 \\
+		0
+	\end{bmatrix}
+	\\
+	\ket{01} \rightarrow \ket{01} :
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		0 \\
+		1 \\
+		0 \\
+		0
+	\end{bmatrix}
+	\\
+	\ket{10} \rightarrow \ket{11} :
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		1
+	\end{bmatrix}
+	\\
+	\ket{11} \rightarrow \ket{10} :
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		0 \\
+		1
+	\end{bmatrix}
+	\rightarrow
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1 \\
+		0
+	\end{bmatrix}
+\end{align*}
+Therefore, based on the heuristic, the gate matrix should be:
+\begin{align*}
+	\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 1 \\
+		0 & 0 & 1 & 0
+	\end{bmatrix}
+\end{align*}
+
 \subsection{Grover's Algorithm}
 \label{sec:groversalgorithm}
 \subsubsection{Why Grover's Algorithm Works}
